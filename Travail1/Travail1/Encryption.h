@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "base64.h"
+#include "Utils.h"
 
 using std::cout;
 using std::endl;
