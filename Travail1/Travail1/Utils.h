@@ -3,6 +3,7 @@
 
 #include <array>
 using std::string;
+using std::array;
 
 //rotates an array one index to the right
 template <class T, size_t SIZE>
@@ -17,7 +18,7 @@ void RotateArrayRight(std::array<T, SIZE> &rArray) {
 }
 //rotates an array numRotations indexes to the right
 template <class T, size_t SIZE>
-void RotateArrayRight(std::array<T,SIZE> &rArray, int numRotations) {
+void RotateArrayRight(array<T,SIZE> &rArray, int numRotations) {
 	if (numRotations < 0) {
 		return;
 	}
@@ -42,6 +43,33 @@ string StringXOR(string string1, string string2) {
 		returnString += string1[i] ^ string2[i];
 	}
 	return returnString;
+}
+
+
+//Prend un charactère ASCII qui représente du Base64 et retourne l'index Base64
+// le Charactère '=' considéré comme index 64
+int CharToB64Index(char c) {
+	if (c >= 65 && c <= 90) {
+		return c - 65;
+	}
+	else if (c >= 97 && c <= 122) {
+		return c - 71;
+	}
+	else if (c >= 48 && c <= 57) {
+		return c + 4;
+	}
+	else if (c == '+') {
+		return 62;
+	}
+	else if (c == '/') {
+		return 63;
+	}
+	else if (c == '=') {
+		return 64;
+	}
+	else {
+		return -1;
+	}
 }
 
 #endif // !UTILS_H
