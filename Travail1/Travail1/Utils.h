@@ -96,4 +96,21 @@ char B64IndexToChar(int index) {
 	}
 }
 
+string KeyGenerator() {
+	string key = "";
+	for (int i = 0; i < (rand()%5) + 4; i++) {
+		key += (char)((rand() % 95) + 32);
+	}
+	return key;
+}
+
+
+string KeyGenerator(int keyLength) {
+	string key = "";
+	for (int i = 0; i < keyLength; i++) {
+		key += (char)((rand() % 95) + 32);
+	}
+	return key;
+}
+
 #endif // !UTILS_H

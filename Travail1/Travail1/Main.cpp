@@ -12,10 +12,16 @@ using std::array;
 
 int main(int argc, char* argv[]) {
 
-	string crypto = Encrypt("il estait", "55F134B6859AD", "09l3");
+	for (int i = 0; i < 25; i++) {
+		string key = KeyGenerator();
 
-	cout << crypto << endl;
-	cout << Decrypt(crypto, "55F134B6859AD", "09l3") << "k" << endl;
+		string crypto = Encrypt("William est un tres beau garcon", key, "09l3");
+
+		cout << crypto << endl;
+	}
+
+	//cout << Decrypt(crypto, key, "09l3") << endl;
+
 
 	getchar();
 	return 0;
