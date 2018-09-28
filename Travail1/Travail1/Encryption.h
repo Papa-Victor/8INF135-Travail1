@@ -9,7 +9,8 @@ using std::cout;
 using std::endl;
 using std::string;
 
-
+//basé dur l'équivalent dans Base.cpp
+//ajout de '='
 static const std::string base64_chars_enc =
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 "abcdefghijklmnopqrstuvwxyz"
@@ -44,7 +45,7 @@ string Encrypt(string messageTemp, string keyTemp, string IVTemp) {
 	string IV = base64_encode(reinterpret_cast<unsigned const char*>(IVTemp.c_str()), IVTemp.length());
 	const int blocSize64 = IV.length();
 
-	while (messageTemp.length() % blocSize != 0) {
+	while (messageTemp.length() % blocSize != 0 || messageTemp.length() < keyTemp.length()) {
 		messageTemp += " ";
 	}
 

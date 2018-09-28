@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <iostream>
+#include <stdio.h>
 #include "Encryption.h"
 
 
@@ -11,10 +12,10 @@ using std::array;
 
 int main(int argc, char* argv[]) {
 
-	string crypto = Encrypt("Ait-ce que Vincent est un genie?", "ley362", "jdkjds");
+	string crypto = Encrypt("il estait", "55F134B6859AD", "09l3");
 
 	cout << crypto << endl;
-	cout << Decrypt(crypto, "ley362", "jd213he") << endl;
+	cout << Decrypt(crypto, "55F134B6859AD", "09l3") << "k" << endl;
 
 	getchar();
 	return 0;
