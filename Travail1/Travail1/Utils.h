@@ -72,4 +72,28 @@ int CharToB64Index(char c) {
 	}
 }
 
+char B64IndexToChar(int index) {
+	if (index >= 0 && index <= 25) {
+		return (char)(index + 65);
+	}
+	else if (index >= 26 && index <= 51) {
+		return (char)(index + 71);
+	}
+	else if (index >= 52 && index <= 61) {
+		return (char)(index - 4);
+	}
+	else if (index == 62) {
+		return '+';
+	}
+	else if (index == 63) {
+		return '/';
+	}
+	else if (index == 64) {
+		return '=';
+	}
+	else {
+		return -1;
+	}
+}
+
 #endif // !UTILS_H

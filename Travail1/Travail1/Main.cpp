@@ -11,7 +11,10 @@ using std::array;
 
 int main(int argc, char* argv[]) {
 
-	cout << Encrypt("Antoine Est Un Beau Bonhomme", "kdu651", "lapo") << endl;
+	string crypto = Encrypt("Ait-ce que Vincent est un genie?", "ley362", "jdkjds");
+
+	cout << crypto << endl;
+	cout << Decrypt(crypto, "ley362", "jd213he") << endl;
 
 	getchar();
 	return 0;

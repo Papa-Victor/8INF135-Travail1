@@ -68,7 +68,6 @@ string Encrypt(string messageTemp, string keyTemp, string IVTemp) {
 		messageSub = message.substr(i * blocSize, blocSize);
 		messageSub = StringXOR(messageSub, bloc);
 		messageSub = base64_encode(reinterpret_cast<const unsigned char*>(messageSub.c_str()), messageSub.length());
-		
 
 		bloc = "";
 		for (int j = 0; j < blocSize64; j++) {
@@ -82,6 +81,54 @@ string Encrypt(string messageTemp, string keyTemp, string IVTemp) {
 	}
 
 	return cryptogramme;
+}
+
+string Decrypt(const string cryptogramme, const string keyTemp, const string IVTemp) {
+	const array<array<char, 65>, 65> tableVig = CreationTableVigenere(base64_chars_enc);
+
+	int positionInKey = 0;
+	string key = base64_encode(reinterpret_cast<unsigned const char*>(keyTemp.c_str()), keyTemp.length());
+
+	const int blocSize = IVTemp.length();
+	const string IV = base64_encode(reinterpret_cast<const unsigned char*>(IVTemp.c_str()), IVTemp.length());
+	const int blocSize64 = IV.length();
+	const int numBloc = cryptogramme.length() / blocSize64;
+
+	string subCrypto = "", prevSubCrypto = IV;
+	string message = "", subMessage = "";
+
+	for (int i = 0; i < numBloc; i++) {
+		subCrypto = cryptogramme.substr(i * blocSize64, blocSize64);
+		for (int j = 0; j < blocSize64; j++) {
+
+			for (int k = 0; k < tableVig[CharToB64Index(key[positionInKey])].size(); k++) {
+				if (subCrypto[j] == tableVig[CharToB64Index(key[positionInKey])][k]) {
+					subMessage += B64IndexToChar(k);
+					break;
+				}
+			}
+			
+			positionInKey++;
+			if (positionInKey > key.length() - 1) {
+				positionInKey = 0;
+			}
+		}
+		prevSubCrypto = base64_decode(prevSubCrypto);
+		if (prevSubCrypto.length() > blocSize) {
+			prevSubCrypto = prevSubCrypto.substr(0, blocSize);
+		}
+		while (prevSubCrypto.length() < blocSize) {
+			prevSubCrypto += " ";
+		}
+
+		message += StringXOR(base64_decode(subMessage), prevSubCrypto);
+		subMessage = "";
+		prevSubCrypto = subCrypto;
+
+
+	}
+
+	return message;
 }
 
 
