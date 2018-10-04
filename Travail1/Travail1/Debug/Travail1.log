@@ -1,11 +1,15 @@
-﻿  Main.cpp
-c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.h(23): warning C4018: '<' : incompatibilité signed/unsigned
-c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.h(24): warning C4018: '<' : incompatibilité signed/unsigned
-c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.h(62): warning C4018: '>' : incompatibilité signed/unsigned
-c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.h(65): warning C4018: '<' : incompatibilité signed/unsigned
-c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.h(77): warning C4018: '>' : incompatibilité signed/unsigned
-c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.h(105): warning C4018: '<' : incompatibilité signed/unsigned
-c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.h(113): warning C4018: '>' : incompatibilité signed/unsigned
-c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.h(118): warning C4018: '>' : incompatibilité signed/unsigned
-c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.h(121): warning C4018: '<' : incompatibilité signed/unsigned
+﻿  Encryption.cpp
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(19): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(20): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(54): warning C4018: '>' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(57): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(69): warning C4018: '>' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(97): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(105): warning C4018: '>' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(110): warning C4018: '>' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(113): warning C4018: '<' : incompatibilité signed/unsigned
+  MAC.cpp
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\mac.cpp(18): warning C4018: '<' : incompatibilité signed/unsigned
+  Utils.cpp
+  Génération de code en cours...
   Travail1.vcxproj -> C:\Users\Utilisateur\Documents\GitHub\8INF135-Travail1\Travail1\Debug\Travail1.exe

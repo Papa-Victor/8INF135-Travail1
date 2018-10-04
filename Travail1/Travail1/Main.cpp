@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <iostream>
-#include <stdio.h>
+#include <string>
+#include <array>
 #include "Encryption.h"
+#include "MAC.h"
 
 
 using std::cout;
@@ -12,16 +14,13 @@ using std::array;
 
 int main(int argc, char* argv[]) {
 
-	for (int i = 0; i < 25; i++) {
-		string key = KeyGenerator();
+	//cout << HashSimple("s") << endl;
 
-		string crypto = Encrypt("William est un tres beau garcon", key, "09l3");
+	string crypto = Encrypt("kjsdhkfhsdkjfh", "l0po", "jfkrasw");
+	
+	cout << crypto << endl;
 
-		cout << crypto << endl;
-	}
-
-	//cout << Decrypt(crypto, key, "09l3") << endl;
-
+	cout << Decrypt(crypto, "l0po", "jfkrasw") << endl;
 
 	getchar();
 	return 0;
