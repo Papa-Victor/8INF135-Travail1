@@ -121,5 +121,5 @@ string Decrypt(const string cryptogramme, const string keyTemp, const string IVT
 
 	}
 
-	return message;
+	return message.substr(0, message.find_first_of((char)0, 0));
 }
