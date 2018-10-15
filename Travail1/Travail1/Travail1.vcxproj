@@ -19,14 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Alice.cpp" />
     <ClCompile Include="Base64.cpp" />
+    <ClCompile Include="Bob.cpp" />
+    <ClCompile Include="Clement.cpp" />
     <ClCompile Include="Encryption.cpp" />
     <ClCompile Include="MAC.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Alice.h" />
     <ClInclude Include="base64.h" />
+    <ClInclude Include="Bob.h" />
+    <ClInclude Include="Clement.h" />
     <ClInclude Include="Encryption.h" />
     <ClInclude Include="MAC.h" />
     <ClInclude Include="Utils.h" />
