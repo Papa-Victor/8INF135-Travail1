@@ -47,4 +47,8 @@ std::string KeyGenerator();
 
 std::string KeyGenerator(int keyLength);
 
+
+//Prend un message reçu contenant le message et le MAC et les séparent
+void ConvertMessage(std::string messageReceived, std::string& message, std::string& mac);
+
 #endif

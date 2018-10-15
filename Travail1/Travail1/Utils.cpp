@@ -1,4 +1,5 @@
 #include "Utils.h"
+#include <random>
 
 using std::string;
 using std::array;
@@ -68,10 +69,14 @@ char B64IndexToChar(int index) {
 	}
 }
 
+std::random_device rd;
+std::mt19937 gen(rd());
+std::uniform_int_distribution<> keyChar(32, 128);
+
 string KeyGenerator() {
 	string key = "";
 	for (int i = 0; i < (rand() % 5) + 4; i++) {
-		key += (char)((rand() % 95) + 32);
+		key += (char)keyChar(gen);
 	}
 	return key;
 }
@@ -80,7 +85,13 @@ string KeyGenerator() {
 string KeyGenerator(int keyLength) {
 	string key = "";
 	for (int i = 0; i < keyLength; i++) {
-		key += (char)((rand() % 95) + 32);
+		key += (char)keyChar(gen);
 	}
 	return key;
+}
+
+void ConvertMessage(string messageReceived, string & message, string & mac)
+{
+	message = messageReceived.substr(0, messageReceived.length() - 16);
+	mac = messageReceived.substr(messageReceived.length() - 16, 16);
 }

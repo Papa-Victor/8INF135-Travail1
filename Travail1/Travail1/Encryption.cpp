@@ -37,7 +37,7 @@ string Encrypt(string messageTemp, string keyTemp, string IVTemp) {
 	string IV = base64_encode(reinterpret_cast<unsigned const char*>(IVTemp.c_str()), IVTemp.length());
 	const int blocSize64 = IV.length();
 
-	while (messageTemp.length() % blocSize != 0 || messageTemp.length() < keyTemp.length()) {
+	while (messageTemp.length() % blocSize != 0) {
 		messageTemp += (char)0;
 	}
 
@@ -111,7 +111,7 @@ string Decrypt(const string cryptogramme, const string keyTemp, const string IVT
 			prevSubCrypto = prevSubCrypto.substr(0, blocSize);
 		}
 		while (prevSubCrypto.length() < blocSize) {
-			prevSubCrypto += (char)0;
+			prevSubCrypto += " ";
 		}
 
 		message += StringXOR(base64_decode(subMessage), prevSubCrypto);
