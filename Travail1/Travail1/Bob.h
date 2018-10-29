@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "Utils.h"
+#include "MAC.h"
 
 class Bob
 {

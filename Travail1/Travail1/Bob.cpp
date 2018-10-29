@@ -8,9 +8,33 @@ bool Bob::ServeurBob()
 	
 	ListenTo(socketAlice, BAPort);
 
-	std::string message = "";
+	std::string messageComplet = "";
+	std::string messageSeul = "";
+	std::string mac = "";
+	int iResult;
+	bool envoi = true;
 
-	receiveFrom(socketAlice, message);
+	iResult = recv(socketAlice, (char*)&envoi, sizeof(bool), 0);
+	if (iResult < 0) {
+		printf("Server : recv failed with error: %d\n", WSAGetLastError());
+		return iResult;
+	}
+	while (envoi) {
+		receiveFrom(socketAlice, messageComplet);
+		ConvertMessage(messageComplet, messageSeul, mac);
+		if (CompareMac(messageSeul, mac, aliceKey, nonce)) {
+			std::cout << "Message Reçu : " << messageSeul << std::endl;
+		}
+		else {
+			std::cout << "Message non integre\n";
+			return false;
+		}
+		iResult = recv(socketAlice, (char*)&envoi, sizeof(bool), 0);
+		if (iResult < 0) {
+			printf("Server : recv failed with error: %d\n", WSAGetLastError());
+			return iResult;
+		}
+	}
 
 	closeSocket(socketAlice);
 	return true;
@@ -18,8 +42,8 @@ bool Bob::ServeurBob()
 
 Bob::Bob()
 {
-	aliceKey = "";
-	nonce = "";
+	aliceKey = "1234";
+	nonce = "5678";
 }
 
 

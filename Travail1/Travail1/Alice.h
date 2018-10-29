@@ -1,7 +1,9 @@
 #ifndef ALICE_H
 #define ALICE_H
 #include <string>
+#include <iostream>
 #include "Utils.h"
+#include "MAC.h"
 class Alice
 {
 #define ClementKey "alic"

@@ -7,6 +7,7 @@
 #include "Utils.h"
 #include "Alice.h"
 #include "Bob.h"
+#include "Clement.h"
 
 using std::cout;
 using std::endl;
@@ -26,6 +27,10 @@ int main(int argc, char* argv[]) {
 		else if ((string)argv[1] == "-b") {
 			Bob b;
 			b.run();
+		}
+		else if ((string)argv[1] == "-c") {
+			Clement c;
+			c.run();
 		}
 	}
 	else {

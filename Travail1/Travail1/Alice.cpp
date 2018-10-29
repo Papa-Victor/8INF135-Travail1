@@ -13,10 +13,41 @@ bool Alice::ClientBob()
 
 	while (!connectTo(socketBob, IP, ABPort)){}
 
-	std::string message = "This is a test message";
-	sendTo(socketBob, message);
+	int iResult;
+	std::string message;
+	bool envoi = true;
 
+	std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
+	std::getline(std::cin, message);
+	while (message.length() < bobKey.length()) {
+		std::cout << "Taille du message trop petite, message doit etre au moins " << bobKey.length() << "Caracteres.\n";
+		std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
+		std::getline(std::cin, message);
+	}
+	while (message != "Exit") {
+		iResult = send(socketBob, (char*)&envoi, sizeof(bool), 0);
+		if (iResult < 0) {
+			printf("Client : send failed with error: %d\n", WSAGetLastError());
+			return false;
+		}
 
+		message += MAC(message, bobKey, nonce);
+		sendTo(socketBob, message);
+		std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
+		std::getline(std::cin, message);
+		while (message.length() < bobKey.length()) {
+			std::cout << "Taille du message trop petite, message doit etre au moins " << bobKey.length() << "Caracteres.\n";
+			std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
+			std::getline(std::cin, message);
+		}
+	}
+
+	envoi = false;
+	iResult = send(socketBob, (char*)&envoi, sizeof(bool), 0);
+	if (iResult < 0) {
+		printf("Client : send failed with error: %d\n", WSAGetLastError());
+		return false;
+	}
 
 
 	closeSocket(socketBob);
@@ -25,8 +56,8 @@ bool Alice::ClientBob()
 
 Alice::Alice()
 {
-	bobKey = "";
-	nonce = "";
+	bobKey = "1234";
+	nonce = "5678";
 }
 
 
