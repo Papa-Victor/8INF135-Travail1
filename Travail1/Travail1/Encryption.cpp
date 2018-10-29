@@ -29,6 +29,9 @@ array<array<char, 65>, 65> CreationTableVigenere(string base64_chars) {
 
 
 string Encrypt(string messageTemp, string keyTemp, string IVTemp) {
+
+	if (messageTemp.length() < keyTemp.length()) return "";
+
 	const array<array<char, 65>, 65> tableVig = CreationTableVigenere(base64_chars_enc);
 
 	const string key = base64_encode(reinterpret_cast<unsigned const char*>(keyTemp.c_str()), keyTemp.length());

@@ -6,7 +6,7 @@ using std::string;
 
 string HashSimple(string message)
 {
-	int hashLength = 8;
+	int hashLength = 4;
 
 	string hashCode = "";
 
@@ -25,6 +25,8 @@ string HashSimple(string message)
 
 std::string MAC(std::string message, std::string key, std::string nonce)
 {
+	if (message.length() < key.length()) return "";
+
 	string mac;
 
 	mac = HashSimple(message);

@@ -6,6 +6,9 @@ class Alice
 #define ClementKey "alic"
 #define ClementNonce "lrk4"
 
+#define ACPort 65002
+#define ABPort 65003
+
 private:
 	std::string bobKey;
 	std::string nonce;

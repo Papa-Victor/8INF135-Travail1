@@ -92,6 +92,6 @@ string KeyGenerator(int keyLength) {
 
 void ConvertMessage(string messageReceived, string & message, string & mac)
 {
-	message = messageReceived.substr(0, messageReceived.length() - 16);
-	mac = messageReceived.substr(messageReceived.length() - 16, 16);
+	message = messageReceived.substr(0, messageReceived.length() - 8);
+	mac = messageReceived.substr(messageReceived.length() - 8, 8);
 }

@@ -7,6 +7,9 @@ class Bob
 #define ClementKey "bobk"
 #define ClementNonce "m953"
 
+#define BCPort 65000
+#define BAPort 65001
+
 private:
 	std::string aliceKey;
 	std::string nonce;
