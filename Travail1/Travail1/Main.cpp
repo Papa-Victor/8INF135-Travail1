@@ -36,8 +36,5 @@ int main(int argc, char* argv[]) {
 	else {
 		cout << "pas assez d'arg" << endl;
 	}
-
-
-	getchar();
 	return 0;
 }

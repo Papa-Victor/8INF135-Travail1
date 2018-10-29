@@ -19,8 +19,8 @@ bool Alice::ClientBob()
 
 	std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
 	std::getline(std::cin, message);
-	while (message.length() < bobKey.length()) {
-		std::cout << "Taille du message trop petite, message doit etre au moins " << bobKey.length() << "Caracteres.\n";
+	while (message.length() < bobKey.length() || message.length() > 128) {
+		std::cout << "Taille du message invalide, message doit etre de 4 a 128 caracteres\n";
 		std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
 		std::getline(std::cin, message);
 	}
@@ -35,8 +35,8 @@ bool Alice::ClientBob()
 		sendTo(socketBob, message);
 		std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
 		std::getline(std::cin, message);
-		while (message.length() < bobKey.length()) {
-			std::cout << "Taille du message trop petite, message doit etre au moins " << bobKey.length() << "Caracteres.\n";
+		while (message.length() < bobKey.length() || message.length() > 128) {
+			std::cout << "Taille du message invalide, message doit etre de 4 a 128 caracteres\n";
 			std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
 			std::getline(std::cin, message);
 		}

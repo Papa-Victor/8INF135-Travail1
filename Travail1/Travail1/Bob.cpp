@@ -32,7 +32,7 @@ bool Bob::ServeurBob()
 		iResult = recv(socketAlice, (char*)&envoi, sizeof(bool), 0);
 		if (iResult < 0) {
 			printf("Server : recv failed with error: %d\n", WSAGetLastError());
-			return iResult;
+			return false;
 		}
 	}
 
