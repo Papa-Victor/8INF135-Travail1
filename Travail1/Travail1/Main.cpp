@@ -5,6 +5,8 @@
 #include "Encryption.h"
 #include "MAC.h"
 #include "Utils.h"
+#include "Alice.h"
+#include "Bob.h"
 
 using std::cout;
 using std::endl;
@@ -15,20 +17,20 @@ using std::array;
 //Les MAC sont donc longs de 8 charactères (8 octets) 
 
 int main(int argc, char* argv[]) {
-
-	string message = "Mes";
-	string key = KeyGenerator(4);
-	string nonce = KeyGenerator(4);
-	string mac = MAC(message, key, nonce);
-
-	message += mac;
-
-	string messaceCon = "";
-	string macCon = "";
-
-	ConvertMessage(message, messaceCon, macCon);
-	cout << message << endl;
-	cout << messaceCon << " " << macCon << endl;
+	cout << argv[1] << endl;
+	if (argc == 2) {
+		if ((string)argv[1] == "-a") {
+			Alice a;
+			a.run();
+		}
+		else if ((string)argv[1] == "-b") {
+			Bob b;
+			b.run();
+		}
+	}
+	else {
+		cout << "pas assez d'arg" << endl;
+	}
 
 
 	getchar();

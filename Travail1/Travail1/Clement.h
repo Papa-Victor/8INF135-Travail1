@@ -11,8 +11,10 @@ class Clement
 #define BobKey "bobk"
 #define BobNonce "m953"
 
-#define CBPort 65004
-#define CAPort 65005
+#define CBPort "65000"
+#define CAPort "65001"
+
+#define IP "172.19.131.79"
 
 private:
 	std::string keyAB;
@@ -24,10 +26,6 @@ public:
 	Clement();
 	~Clement();
 
-#pragma region Get/Set
-	std::string GetKeyAB() const { return keyAB; }
-	std::string GetNonceAB() const { return nonceAB; }
-#pragma endregion
-
+	void run();
 };
 #endif //!CLEMENT_H

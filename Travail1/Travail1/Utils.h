@@ -3,6 +3,8 @@
 
 #include <array>
 #include <string>
+#include <ws2tcpip.h>
+#include <stdio.h>
 
 
 //rotates an array one index to the right
@@ -50,5 +52,19 @@ std::string KeyGenerator(int keyLength);
 
 //Prend un message reçu contenant le message et le MAC et les séparent
 void ConvertMessage(std::string messageReceived, std::string& message, std::string& mac);
+
+
+//----------------------------------------
+//Fonctions réseaux
+bool InitialiseWinsock();
+void CleanupWinsock();
+
+bool ListenTo(SOCKET& socket, const std::string& port);
+bool connectTo(SOCKET& socket, const std::string& address, const std::string& port);
+bool closeSocket(SOCKET& socket);
+
+bool sendTo(SOCKET& socket, const std::string& inMessage);
+int receiveFrom(SOCKET& socket, std::string& outMessage);
+//----------------------------------------
 
 #endif

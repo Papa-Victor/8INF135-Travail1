@@ -1,2 +1,9 @@
-﻿  Main.cpp
+﻿  Alice.cpp
+  Bob.cpp
+  Main.cpp
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\bob.h(9): warning C4005: 'ClementKey' : redéfinition de macro
+  c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\alice.h(7): note: voir la définition précédente de 'ClementKey'
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\bob.h(10): warning C4005: 'ClementNonce' : redéfinition de macro
+  c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\alice.h(8): note: voir la définition précédente de 'ClementNonce'
+  Génération de code en cours...
   Travail1.vcxproj -> C:\Users\Utilisateur\Documents\GitHub\8INF135-Travail1\Travail1\Debug\Travail1.exe
