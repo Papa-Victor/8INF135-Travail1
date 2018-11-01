@@ -22,15 +22,15 @@ int main(int argc, char* argv[]) {
 	if (argc == 2) {
 		if ((string)argv[1] == "-a") {
 			Alice a;
-			a.run();
+			return a.run();
 		}
 		else if ((string)argv[1] == "-b") {
 			Bob b;
-			b.run();
+			return b.run();
 		}
 		else if ((string)argv[1] == "-c") {
 			Clement c;
-			c.run();
+			return c.run();
 		}
 	}
 	else {

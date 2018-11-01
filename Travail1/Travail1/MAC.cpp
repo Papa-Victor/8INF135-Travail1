@@ -1,3 +1,4 @@
+#include <iostream>
 #include "MAC.h"
 #include "Utils.h"
 #include "Encryption.h"
@@ -6,6 +7,9 @@ using std::string;
 
 string HashSimple(string message)
 {
+	std::cout << "----------Log Hash----------\n";
+	std::cout << "Input: \n\tMessage: " << message << std::endl;
+
 	int hashLength = 4;
 
 	string hashCode = "";
@@ -20,11 +24,16 @@ string HashSimple(string message)
 		hashCode = StringXOR(hashCode, message.substr(i, hashLength));
 	}
 
+	std::cout << "Ouput: \n\tHash: " << hashCode << std::endl;
+	std::cout << "----------Log Hash End----------\n";
+
 	return hashCode;
 }
 
 std::string MAC(std::string message, std::string key, std::string nonce)
 {
+	std::cout << "----------Log MAC----------\n";
+	std::cout << "Input:\n\tMessage: " << message << std::endl << "\tKey: " << key << std::endl << "\tNonce: " << nonce << std::endl;
 	if (message.length() < key.length()) return "";
 
 	string mac;
@@ -33,14 +42,24 @@ std::string MAC(std::string message, std::string key, std::string nonce)
 
 	mac = Encrypt(mac, key, nonce);
 
+
+	std::cout << "Output\n\tMAC: " << mac << std::endl;
+	std::cout << "----------Log MAC End----------\n";
 	return mac;
 }
 
 bool CompareMac(std::string message, std::string macReceived, std::string key, std::string nonce)
 {
+	std::cout << "----------Log CompareMac----------\n";
+	std::cout << "Input: \n\tMessage: " << message << std::endl << "\tMAC: " << macReceived << std::endl
+	<< "\tKey :" << key << std::endl << "\tNonce: " << nonce << std::endl;
+	
 	string hashReceived = Decrypt(macReceived, key, nonce);
 
 	string hashMessage = HashSimple(message);
+
+	std::cout << "Output\n\tIdentical :" << (hashReceived == hashMessage) << std::endl;
+	std::cout << "----------Log CompareMac End----------\n";
 
 	return hashReceived == hashMessage;
 }

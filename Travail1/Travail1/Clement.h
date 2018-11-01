@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Utils.h"
+#include "MAC.h"
 
 class Clement
 {
@@ -14,18 +15,19 @@ class Clement
 #define CBPort "65000"
 #define CAPort "65001"
 
-#define IP "172.19.131.79"
+#define IP "10.0.1.14"
 
 private:
 	std::string keyAB;
 	std::string nonceAB;
 	void CreateKey() { keyAB = KeyGenerator(4); }
 	void CreateNonce() { nonceAB = KeyGenerator(4); }
+	bool keyServeur(std::string port, std::string key, std::string nonce);
 
 public:
 	Clement();
 	~Clement();
 
-	void run();
+	int run();
 };
 #endif //!CLEMENT_H

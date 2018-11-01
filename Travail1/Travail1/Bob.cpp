@@ -1,4 +1,5 @@
 #include "Bob.h"
+#include "Encryption.h"
 
 
 
@@ -7,6 +8,11 @@ bool Bob::ServeurBob()
 	SOCKET socketAlice;
 	
 	ListenTo(socketAlice, BAPort);
+
+	if (!ClientClement()) {
+		closeSocket(socketAlice);
+		return false;
+	}
 
 	std::string messageComplet = "";
 	std::string messageSeul = "";
@@ -27,6 +33,7 @@ bool Bob::ServeurBob()
 		}
 		else {
 			std::cout << "Message non integre\n";
+			closeSocket(socketAlice);
 			return false;
 		}
 		iResult = recv(socketAlice, (char*)&envoi, sizeof(bool), 0);
@@ -40,10 +47,53 @@ bool Bob::ServeurBob()
 	return true;
 }
 
+bool Bob::ClientClement()
+{
+	SOCKET socketClement;
+
+	while (!connectTo(socketClement, IP, BCPort)) {}
+
+	std::string messageComplet = "", message = "", mac = "";
+	receiveFrom(socketClement, messageComplet);
+	messageComplet = Decrypt(messageComplet, ClementKey, ClementNonce);
+	if (messageComplet == "") {
+		std::cout << "Erreur Dechiffrement\n";
+		closeSocket(socketClement);
+		return false;
+	}
+	ConvertMessage(messageComplet, message, mac);
+	if (CompareMac(message, mac, ClementKey, ClementNonce)) {
+		aliceKey = message;
+	}
+	else {
+		std::cout << "Message non integre\n";
+		closeSocket(socketClement);
+		return false;
+	}
+
+	receiveFrom(socketClement, messageComplet);
+	messageComplet = Decrypt(messageComplet, ClementKey, ClementNonce);
+	if (messageComplet == "") {
+		std::cout << "Erreur Dechiffrement\n";
+		closeSocket(socketClement);
+		return false;
+	}
+	ConvertMessage(messageComplet, message, mac);
+	if (CompareMac(message, mac, ClementKey, ClementNonce)) {
+		nonce = message;
+	}
+	else {
+		std::cout << "Message non integre\n";
+		closeSocket(socketClement);
+		return false;
+	}
+
+	closeSocket(socketClement);
+	return true;
+}
+
 Bob::Bob()
 {
-	aliceKey = "1234";
-	nonce = "5678";
 }
 
 
@@ -51,11 +101,15 @@ Bob::~Bob()
 {
 }
 
-void Bob::run()
+int Bob::run()
 {
 	InitialiseWinsock();
 
-	ServeurBob();
+	if (!ServeurBob()) {
+		CleanupWinsock();
+		return -1;
+	}
 
 	CleanupWinsock();
+	return 0;
 }

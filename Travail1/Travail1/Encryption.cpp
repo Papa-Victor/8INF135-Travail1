@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <iostream>
 #include "Encryption.h"
 #include "base64.h"
 #include "Utils.h"
@@ -29,6 +30,11 @@ array<array<char, 65>, 65> CreationTableVigenere(string base64_chars) {
 
 
 string Encrypt(string messageTemp, string keyTemp, string IVTemp) {
+
+	std::cout << "----------Log Encrypt----------\n";
+	std::cout << "Input:\n" << "\tMessage: " << messageTemp << std::endl << "\tKey: " << keyTemp
+	<< std::endl << "\tNonce: " << IVTemp << std::endl;
+
 
 	if (messageTemp.length() < keyTemp.length()) return "";
 
@@ -76,10 +82,18 @@ string Encrypt(string messageTemp, string keyTemp, string IVTemp) {
 		cryptogramme += bloc;
 	}
 
+	std::cout << "Output: \n\tCryptogramme: " << cryptogramme << std::endl;
+	std::cout << "----------Log Encrypt End----------\n";
+
 	return cryptogramme;
 }
 
 string Decrypt(const string cryptogramme, const string keyTemp, const string IVTemp) {
+
+	std::cout << "----------Log Decrypt----------\n";
+	std::cout << "Input:\n" << "\tCryptogramme: " << cryptogramme << std::endl << "\tKey: " << keyTemp
+	<< std::endl << "\tNonce: " << IVTemp << std::endl;
+
 	const array<array<char, 65>, 65> tableVig = CreationTableVigenere(base64_chars_enc);
 
 	int positionInKey = 0;
@@ -124,5 +138,8 @@ string Decrypt(const string cryptogramme, const string keyTemp, const string IVT
 
 	}
 
-	return message.substr(0, message.find_first_of((char)0, 0));
+	std::cout << "Output: \n\tMessage: " << message << std::endl;
+	std::cout << "----------Log Decrypt End----------\n";
+
+	return message;
 }
