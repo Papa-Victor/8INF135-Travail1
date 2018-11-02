@@ -33,7 +33,7 @@ string Encrypt(string messageTemp, string keyTemp, string IVTemp) {
 
 	std::cout << "----------Log Encrypt----------\n";
 	std::cout << "Input:\n" << "\tMessage: " << messageTemp << std::endl << "\tKey: " << keyTemp
-	<< std::endl << "\tNonce: " << IVTemp << std::endl;
+	<< std::endl << "\tIV: " << IVTemp << std::endl;
 
 
 	if (messageTemp.length() < keyTemp.length()) return "";
@@ -46,9 +46,12 @@ string Encrypt(string messageTemp, string keyTemp, string IVTemp) {
 	string IV = base64_encode(reinterpret_cast<unsigned const char*>(IVTemp.c_str()), IVTemp.length());
 	const int blocSize64 = IV.length();
 
-	while (messageTemp.length() % blocSize != 0) {
-		messageTemp += (char)0;
+	char messageLength = messageTemp.length();
+
+	while (messageTemp.length() % blocSize != blocSize - 1) {
+		messageTemp += CHAR_MAX;
 	}
+	messageTemp += messageLength;
 
 	const string message = messageTemp;
 
@@ -92,7 +95,7 @@ string Decrypt(const string cryptogramme, const string keyTemp, const string IVT
 
 	std::cout << "----------Log Decrypt----------\n";
 	std::cout << "Input:\n" << "\tCryptogramme: " << cryptogramme << std::endl << "\tKey: " << keyTemp
-	<< std::endl << "\tNonce: " << IVTemp << std::endl;
+	<< std::endl << "\tIV: " << IVTemp << std::endl;
 
 	const array<array<char, 65>, 65> tableVig = CreationTableVigenere(base64_chars_enc);
 
@@ -138,8 +141,13 @@ string Decrypt(const string cryptogramme, const string keyTemp, const string IVT
 
 	}
 
-	std::cout << "Output: \n\tMessage: " << message << std::endl;
+	size_t messageLength = message.back();
+
+	std::string messagesub = message.substr(0, messageLength);
+
+	std::cout << "Output: \n\tMessage: " << messagesub << std::endl;
 	std::cout << "----------Log Decrypt End----------\n";
 
-	return message;
+	return messagesub;
+
 }

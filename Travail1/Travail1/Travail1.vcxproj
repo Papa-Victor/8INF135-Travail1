@@ -34,6 +34,7 @@
     <ClInclude Include="Bob.h" />
     <ClInclude Include="Clement.h" />
     <ClInclude Include="Encryption.h" />
+    <ClInclude Include="IP.h" />
     <ClInclude Include="MAC.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>

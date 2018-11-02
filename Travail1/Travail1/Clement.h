@@ -8,21 +8,21 @@
 class Clement
 {
 #define AliceKey "alic"
-#define AliceNonce "lrk4"
+#define AliceIV "lrk4"
 #define BobKey "bobk"
-#define BobNonce "m953"
+#define BobIV "m953"
 
 #define CBPort "65000"
 #define CAPort "65001"
 
-#define IP "10.0.1.14"
-
 private:
 	std::string keyAB;
-	std::string nonceAB;
+	std::string keyAB_MAC;
+	std::string IVAB;
 	void CreateKey() { keyAB = KeyGenerator(4); }
-	void CreateNonce() { nonceAB = KeyGenerator(4); }
-	bool keyServeur(std::string port, std::string key, std::string nonce);
+	void CreateKeyMAC() { keyAB_MAC = KeyGenerator(4); }
+	void CreateIV() { IVAB = KeyGenerator(4); }
+	bool keyServeur(std::string port, std::string key, std::string IV);
 
 public:
 	Clement();

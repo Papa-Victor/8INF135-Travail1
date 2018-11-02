@@ -1,5 +1,6 @@
 #include "Bob.h"
 #include "Encryption.h"
+#include "IP.h"
 
 
 
@@ -27,8 +28,9 @@ bool Bob::ServeurBob()
 	}
 	while (envoi) {
 		receiveFrom(socketAlice, messageComplet);
+		messageComplet = Decrypt(messageComplet, aliceKey, IV);
 		ConvertMessage(messageComplet, messageSeul, mac);
-		if (CompareMac(messageSeul, mac, aliceKey, nonce)) {
+		if (CompareMac(messageSeul, mac, aliceKeyMAC, IV)) {
 			std::cout << "Message Reçu : " << messageSeul << std::endl;
 		}
 		else {
@@ -51,18 +53,19 @@ bool Bob::ClientClement()
 {
 	SOCKET socketClement;
 
-	while (!connectTo(socketClement, IP, BCPort)) {}
+	while (!connectTo(socketClement, IP_Clement, BCPort)) {}
 
 	std::string messageComplet = "", message = "", mac = "";
+
 	receiveFrom(socketClement, messageComplet);
-	messageComplet = Decrypt(messageComplet, ClementKey, ClementNonce);
+	messageComplet = Decrypt(messageComplet, ClementKey, ClementIV);
 	if (messageComplet == "") {
 		std::cout << "Erreur Dechiffrement\n";
 		closeSocket(socketClement);
 		return false;
 	}
 	ConvertMessage(messageComplet, message, mac);
-	if (CompareMac(message, mac, ClementKey, ClementNonce)) {
+	if (CompareMac(message, mac, ClementKey, ClementIV)) {
 		aliceKey = message;
 	}
 	else {
@@ -72,15 +75,32 @@ bool Bob::ClientClement()
 	}
 
 	receiveFrom(socketClement, messageComplet);
-	messageComplet = Decrypt(messageComplet, ClementKey, ClementNonce);
+	messageComplet = Decrypt(messageComplet, ClementKey, ClementIV);
 	if (messageComplet == "") {
 		std::cout << "Erreur Dechiffrement\n";
 		closeSocket(socketClement);
 		return false;
 	}
 	ConvertMessage(messageComplet, message, mac);
-	if (CompareMac(message, mac, ClementKey, ClementNonce)) {
-		nonce = message;
+	if (CompareMac(message, mac, ClementKey, ClementIV)) {
+		aliceKeyMAC = message;
+	}
+	else {
+		std::cout << "Message non integre\n";
+		closeSocket(socketClement);
+		return false;
+	}
+
+	receiveFrom(socketClement, messageComplet);
+	messageComplet = Decrypt(messageComplet, ClementKey, ClementIV);
+	if (messageComplet == "") {
+		std::cout << "Erreur Dechiffrement\n";
+		closeSocket(socketClement);
+		return false;
+	}
+	ConvertMessage(messageComplet, message, mac);
+	if (CompareMac(message, mac, ClementKey, ClementIV)) {
+		IV = message;
 	}
 	else {
 		std::cout << "Message non integre\n";

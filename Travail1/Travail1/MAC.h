@@ -5,9 +5,9 @@
 
 std::string HashSimple(std::string message);
 
-std::string MAC(std::string message, std::string key, std::string nonce);
+std::string MAC(std::string message, std::string key, std::string IV);
 
-bool CompareMac(std::string message, std::string macReceived, std::string key, std::string nonce);
+bool CompareMac(std::string message, std::string macReceived, std::string key, std::string IV);
 
 
 

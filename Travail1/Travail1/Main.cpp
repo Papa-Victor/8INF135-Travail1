@@ -14,8 +14,8 @@ using std::endl;
 using std::string;
 using std::array;
 
-//Les nonces sont de longs de 4 charactères (4 octets)
-//Les MAC sont donc longs de 8 charactères (8 octets) 
+//Les IVs sont de longs de 4 charactères (4 octets)
+//Les MAC sont donc longs de 16 charactères (16 octets) 
 
 int main(int argc, char* argv[]) {
 	cout << argv[1] << endl;

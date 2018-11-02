@@ -4,7 +4,7 @@
 
 
 
-bool Clement::keyServeur(std::string port, std::string key, std::string nonce)
+bool Clement::keyServeur(std::string port, std::string key, std::string IV)
 {
 
 	SOCKET socket;
@@ -12,36 +12,59 @@ bool Clement::keyServeur(std::string port, std::string key, std::string nonce)
 	ListenTo(socket, port);
 
 	std::string message = keyAB;
-	std::string mac = MAC(message, key, nonce);
+	std::string mac = MAC(message, key, IV);
 	if (mac == "") {
 		std::cout << "Erreur Creation du MAC\n";
 		closeSocket(socket);
 		return false;
 	}
 	message += mac;
-	message = Encrypt(message, key, nonce);
+	message = Encrypt(message, key, IV);
 	if (message == "") {
 		std::cout << "Erreur Chiffrement\n";
 		closeSocket(socket);
 		return false;
 	}
+
+	std::cout << "\nMessage envoye: " << message << "\n\n";
 
 	sendTo(socket, message);
 
-	message = nonceAB;
-	mac = MAC(message, key, nonce);
+	message = keyAB_MAC;
+	mac = MAC(message, key, IV);
 	if (mac == "") {
 		std::cout << "Erreur Creation du MAC\n";
 		closeSocket(socket);
 		return false;
 	}
 	message += mac;
-	message = Encrypt(message, key, nonce);
+	message = Encrypt(message, key, IV);
 	if (message == "") {
 		std::cout << "Erreur Chiffrement\n";
 		closeSocket(socket);
 		return false;
 	}
+
+	std::cout << "\nMessage envoye: " << message << "\n\n";
+
+	sendTo(socket, message);
+
+	message = IVAB;
+	mac = MAC(message, key, IV);
+	if (mac == "") {
+		std::cout << "Erreur Creation du MAC\n";
+		closeSocket(socket);
+		return false;
+	}
+	message += mac;
+	message = Encrypt(message, key, IV);
+	if (message == "") {
+		std::cout << "Erreur Chiffrement\n";
+		closeSocket(socket);
+		return false;
+	}
+
+	std::cout << "\nMessage envoye: " << message << "\n\n";
 
 	sendTo(socket, message);
 
@@ -52,7 +75,8 @@ bool Clement::keyServeur(std::string port, std::string key, std::string nonce)
 Clement::Clement()
 {
 	CreateKey();
-	CreateNonce();
+	CreateKeyMAC();
+	CreateIV();
 }
 
 
@@ -64,11 +88,11 @@ int Clement::run()
 {
 	InitialiseWinsock();
 
-	if (!keyServeur(CAPort, AliceKey, AliceNonce)) {
+	if (!keyServeur(CAPort, AliceKey, AliceIV)) {
 		CleanupWinsock();
 		return -1;
 	}
-	if (!keyServeur(CBPort, BobKey, BobNonce)) {
+	if (!keyServeur(CBPort, BobKey, BobIV)) {
 		CleanupWinsock();
 		return -1;
 	}

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Encryption.h"
 #include "Alice.h"
+#include "IP.h"
 
 
 
@@ -8,17 +9,17 @@ bool Alice::ClientBob()
 {
 	SOCKET socketBob;
 
-	while (!connectTo(socketBob, IP, ABPort)){}
+	while (!connectTo(socketBob, IP_Bob, ABPort)){}
 
 	int iResult;
 	std::string message, mac;
 	bool envoi = true;
 
-	std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
+	std::cout << "Saisir un message. Saisir \"Exit\" pour terminer la communication.\n";
 	std::getline(std::cin, message);
-	while ((message.length() < bobKey.length() || message.length() > 128) && message != "Exit") {
-		std::cout << "Taille du message invalide, message doit etre de " << bobKey.length()<< " a 128 caracteres\n";
-		std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
+	while ((message.length() < bobKeyMAC.length() || message.length() > 128) && message != "Exit") {
+		std::cout << "Taille du message invalide, message doit etre de " << bobKeyMAC.length()<< " a 128 caracteres\n";
+		std::cout << "Saisir un message. Saisir \"Exit\" pour terminer la communication.\n";
 		std::getline(std::cin, message);
 	}
 	while (message != "Exit") {
@@ -28,7 +29,7 @@ bool Alice::ClientBob()
 			return false;
 		}
 
-		mac = MAC(message, bobKey, nonce);
+		mac = MAC(message, bobKeyMAC, IV);
 		if (mac == "") {
 			std::cout << "Erreur Creation du MAC\n";
 			closeSocket(socketBob);
@@ -36,12 +37,16 @@ bool Alice::ClientBob()
 		}
 		message += mac;
 
+		message = Encrypt(message, bobKey, IV);
+
+		std::cout << "\nMessage envoye: " << message << "\n\n";
+
 		sendTo(socketBob, message);
-		std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
+		std::cout << "Saisir un message. Saisir \"Exit\" pour terminer la communication.\n";
 		std::getline(std::cin, message);
-		while (message.length() < bobKey.length() || message.length() > 128) {
+		while (message.length() < bobKeyMAC.length() || message.length() > 128) {
 			std::cout << "Taille du message invalide, message doit etre de 4 a 128 caracteres\n";
-			std::cout << "Enter a message, Enter \"Exit\" to stop the communication\n";
+			std::cout << "Saisir un message. Saisir \"Exit\" pour terminer la communication.\n";
 			std::getline(std::cin, message);
 		}
 	}
@@ -62,11 +67,12 @@ bool Alice::ClientClement()
 {
 	SOCKET socketClement;
 
-	while (!connectTo(socketClement, IP, ACPort)){}
+	while (!connectTo(socketClement, IP_Clement, ACPort)){}
 
 	std::string messageComplet = "", message = "", mac = "";
+
 	receiveFrom(socketClement, messageComplet);
-	messageComplet = Decrypt(messageComplet, ClementKey, ClementNonce);
+	messageComplet = Decrypt(messageComplet, ClementKey, ClementIV);
 	if (messageComplet == "") {
 		std::cout << "Erreur Dechiffrement\n";
 		closeSocket(socketClement);
@@ -74,7 +80,7 @@ bool Alice::ClientClement()
 	}
 
 	ConvertMessage(messageComplet, message, mac);
-	if (CompareMac(message, mac, ClementKey, ClementNonce)) {
+	if (CompareMac(message, mac, ClementKey, ClementIV)) {
 		bobKey = message;
 	}
 	else {
@@ -83,15 +89,32 @@ bool Alice::ClientClement()
 	}
 
 	receiveFrom(socketClement, messageComplet);
-	messageComplet = Decrypt(messageComplet, ClementKey, ClementNonce);
+	messageComplet = Decrypt(messageComplet, ClementKey, ClementIV);
+	if (messageComplet == "") {
+		std::cout << "Erreur Dechiffrement\n";
+		closeSocket(socketClement);
+		return false;
+	}
+
+	ConvertMessage(messageComplet, message, mac);
+	if (CompareMac(message, mac, ClementKey, ClementIV)) {
+		bobKeyMAC = message;
+	}
+	else {
+		std::cout << "Message non integre\n";
+		return false;
+	}
+
+	receiveFrom(socketClement, messageComplet);
+	messageComplet = Decrypt(messageComplet, ClementKey, ClementIV);
 	if (messageComplet == "") {
 		std::cout << "Erreur Dechiffrement\n";
 		closeSocket(socketClement);
 		return false;
 	}
 	ConvertMessage(messageComplet, message, mac);
-	if (CompareMac(message, mac, ClementKey, ClementNonce)) {
-		nonce = message;
+	if (CompareMac(message, mac, ClementKey, ClementIV)) {
+		IV = message;
 	}
 	else {
 		std::cout << "Message non integre\n";
