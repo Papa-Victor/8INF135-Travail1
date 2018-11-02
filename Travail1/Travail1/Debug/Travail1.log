@@ -1,2 +1,19 @@
-﻿  Utils.cpp
+﻿  Alice.cpp
+  Bob.cpp
+  Clement.cpp
+  Encryption.cpp
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(22): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(23): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(53): warning C4267: 'initialisation' : conversion de 'size_t' en 'char', perte possible de données
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(72): warning C4018: '>' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(75): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(91): warning C4018: '>' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(129): warning C4018: '<' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(137): warning C4018: '>' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(144): warning C4018: '>' : incompatibilité signed/unsigned
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\encryption.cpp(147): warning C4018: '<' : incompatibilité signed/unsigned
+  MAC.cpp
+c:\users\utilisateur\documents\github\8inf135-travail1\travail1\travail1\mac.cpp(26): warning C4018: '<' : incompatibilité signed/unsigned
+  Utils.cpp
+  Génération de code en cours...
   Travail1.vcxproj -> C:\Users\Utilisateur\Documents\GitHub\8INF135-Travail1\Travail1\Debug\Travail1.exe

@@ -4,7 +4,7 @@
 #include "IP.h"
 
 
-
+//Cette fonction gère les communications avec Bob
 bool Alice::ClientBob()
 {
 	SOCKET socketBob;
@@ -17,18 +17,23 @@ bool Alice::ClientBob()
 
 	std::cout << "Saisir un message. Saisir \"Exit\" pour terminer la communication.\n";
 	std::getline(std::cin, message);
+	//Vérifie que le message est de la bonne taille
 	while ((message.length() < bobKeyMAC.length() || message.length() > 128) && message != "Exit") {
 		std::cout << "Taille du message invalide, message doit etre de " << bobKeyMAC.length()<< " a 128 caracteres\n";
 		std::cout << "Saisir un message. Saisir \"Exit\" pour terminer la communication.\n";
 		std::getline(std::cin, message);
 	}
+
+
 	while (message != "Exit") {
+		//Envoie un booléen à Bob lui qui signifie qu'un message sera envoyé
 		iResult = send(socketBob, (char*)&envoi, sizeof(bool), 0);
 		if (iResult < 0) {
 			printf("Client : send failed with error: %d\n", WSAGetLastError());
 			return false;
 		}
 
+		//préparation du message
 		mac = MAC(message, bobKeyMAC, IV);
 		if (mac == "") {
 			std::cout << "Erreur Creation du MAC\n";
@@ -41,7 +46,10 @@ bool Alice::ClientBob()
 
 		std::cout << "\nMessage envoye: " << message << "\n\n";
 
+		//Envoi du message
 		sendTo(socketBob, message);
+
+		//Prend un autre message ou on coupe la communication
 		std::cout << "Saisir un message. Saisir \"Exit\" pour terminer la communication.\n";
 		std::getline(std::cin, message);
 		while (message.length() < bobKeyMAC.length() || message.length() > 128) {
@@ -63,6 +71,8 @@ bool Alice::ClientBob()
 	return true;
 }
 
+//Communication avec Clement
+//Reçoit les clés et l'IV pour la communication avec Bob
 bool Alice::ClientClement()
 {
 	SOCKET socketClement;

@@ -8,6 +8,7 @@ using std::string;
 using std::array;
 
 
+//Effectue un ou exclusif sur les charactère d'une string
 string StringXOR(string string1, string string2) {
 	int string1l = string1.length();
 	if (string1l != string2.length()) {
@@ -47,6 +48,7 @@ int CharToB64Index(char c) {
 	}
 }
 
+//prend un index en base64 et retourne le charactère correspondant
 char B64IndexToChar(int index) {
 	if (index >= 0 && index <= 25) {
 		return (char)(index + 65);
@@ -75,6 +77,7 @@ std::random_device rd;
 std::mt19937 gen(rd());
 std::uniform_int_distribution<> keyChar(32, 128);
 
+//Génère une clé aléatoirement
 string KeyGenerator() {
 	string key = "";
 	for (int i = 0; i < (rand() % 5) + 4; i++) {
@@ -92,7 +95,7 @@ string KeyGenerator(int keyLength) {
 	return key;
 }
 
-
+//Sépare le message du mac
 void ConvertMessage(string messageReceived, string & message, string & mac)
 {
 	message = messageReceived.substr(0, messageReceived.length() - 16);

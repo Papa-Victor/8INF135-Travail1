@@ -18,7 +18,6 @@ using std::array;
 //Les MAC sont donc longs de 16 charactères (16 octets) 
 
 int main(int argc, char* argv[]) {
-	cout << argv[1] << endl;
 	if (argc == 2) {
 		if ((string)argv[1] == "-a") {
 			Alice a;
@@ -32,9 +31,12 @@ int main(int argc, char* argv[]) {
 			Clement c;
 			return c.run();
 		}
+		else{
+			cout << "Argument invalide" << endl;
+		}		
 	}
 	else {
-		cout << "pas assez d'arg" << endl;
+		cout << "Erreur de structure: Travail1.exe <argument>" << endl;
 	}
 	return 0;
 }

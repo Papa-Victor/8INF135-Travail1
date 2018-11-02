@@ -14,9 +14,12 @@ string HashSimple(string message)
 
 	string hashCode = "";
 
+	//crée un bloc de taille 4 pour l'initialisation
 	for (int i = 0; i < hashLength; i++) {
 		hashCode += " ";
 	}
+
+	//s'assure que le message est divisible en bloc de hashlength
 	while (message.length() % hashLength != 0) {
 		message += " ";
 	}
@@ -30,6 +33,7 @@ string HashSimple(string message)
 	return hashCode;
 }
 
+//Création du MAC à partir du message et de la clé
 std::string MAC(std::string message, std::string key, std::string IV)
 {
 	std::cout << "----------Log MAC----------\n";
@@ -48,6 +52,8 @@ std::string MAC(std::string message, std::string key, std::string IV)
 	return mac;
 }
 
+
+//prend un message et un MAC et vérifie s'ils correspondent
 bool CompareMac(std::string message, std::string macReceived, std::string key, std::string IV)
 {
 	std::cout << "----------Log CompareMac----------\n";

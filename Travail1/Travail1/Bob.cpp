@@ -21,14 +21,21 @@ bool Bob::ServeurBob()
 	int iResult;
 	bool envoi = true;
 
+	//Réception du Booléen, si vrai, Alice envoie un message
 	iResult = recv(socketAlice, (char*)&envoi, sizeof(bool), 0);
 	if (iResult < 0) {
 		printf("Server : recv failed with error: %d\n", WSAGetLastError());
 		return iResult;
 	}
+
+	//Tant qu'Alice envoie des messages, on les reçoit
 	while (envoi) {
 		receiveFrom(socketAlice, messageComplet);
+
+		//Déchiffrement
 		messageComplet = Decrypt(messageComplet, aliceKey, IV);
+
+		//Vérification de l'intégrité
 		ConvertMessage(messageComplet, messageSeul, mac);
 		if (CompareMac(messageSeul, mac, aliceKeyMAC, IV)) {
 			std::cout << "Message Reçu : " << messageSeul << std::endl;
@@ -38,6 +45,8 @@ bool Bob::ServeurBob()
 			closeSocket(socketAlice);
 			return false;
 		}
+
+		//Réception du Booléen, si vrai, Alice envoie un message
 		iResult = recv(socketAlice, (char*)&envoi, sizeof(bool), 0);
 		if (iResult < 0) {
 			printf("Server : recv failed with error: %d\n", WSAGetLastError());
@@ -49,6 +58,9 @@ bool Bob::ServeurBob()
 	return true;
 }
 
+
+//Communication avec Clement
+//Reçoit les clés et l'IV pour la communication avec Alice
 bool Bob::ClientClement()
 {
 	SOCKET socketClement;
